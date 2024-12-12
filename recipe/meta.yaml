@@ -1,13 +1,13 @@
 {% set name = "aurora-ssg" %}
-{% set version = "0.1.6" %}
+{% set version = "0.1.7" %}
 
 package:
   name: {{ name|lower }}
   version: {{ version }}
 
 source:
-  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/aurora-ssg-{{ version }}.tar.gz
-  sha256: 91c23ee84f04b7c6bf26f36615ed3c18e0462dd31ddd35f86005c1a1ef708ffe
+  url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/{{ name.replace('-', '_') }}-{{ version }}.tar.gz
+  sha256: d461f82a7ba9d51824a2751d98e31f07dc64d43616405ee278ebcf19ae3f1bf0
 
 build:
   entry_points:
@@ -18,14 +18,15 @@ build:
 
 requirements:
   host:
-    - python >=3.7
+    - python {{ python_min }}
     - pip
+    - setuptools
   run:
-    - python >=3.7
+    - python >={{ python_min }}
     - jinja2
     - livereload
     - toposort
-    - pyromark
+    - pyromark ~=0.6.0
     - python-frontmatter
     - requests
     - progress
@@ -33,6 +34,7 @@ requirements:
     - orjson
     - tqdm
     - python-dateutil
+    - chardet
 
 test:
   imports:
@@ -42,6 +44,7 @@ test:
     - aurora --help
   requires:
     - pip
+    - python {{ python_min }}
 
 about:
   home: https://github.com/capjamesg/aurora
